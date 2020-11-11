@@ -1,0 +1,4 @@
+pikepdf
+numpy
+scikit-image
+click
