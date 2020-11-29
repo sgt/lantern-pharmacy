@@ -1,4 +1,6 @@
 pikepdf
-numpy
+numpy==1.19.3
 scikit-image
 click
+tesserocr
+opencv-python

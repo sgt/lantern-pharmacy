@@ -2,7 +2,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-test/data/
+#test/data/
 
 .venv/
 .idea/
+.ipynb_checkpoints/
