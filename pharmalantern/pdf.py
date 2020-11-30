@@ -2,17 +2,11 @@ import logging
 import os
 from typing import Dict, Iterable
 
-import cv2
 import numpy as np
 import pikepdf
 from pikepdf import PdfImage
 
-SELECTED_PAGES = {
-    'crisp': 948,
-    'pale': 1382,
-    'new_letter': 1387,
-    'curvy': 897  # separation lines are not quite straight
-}
+
 
 
 def _get_pdf_image_page(pdf, page_num: int) -> PdfImage:
@@ -45,13 +39,11 @@ def save_page(pdf, page_num: int, directory: str, filename: str) -> None:
     pdf_image.extract_to(fileprefix=os.path.join(directory, filename))
 
 
-def save_selected_pages(pdf_filename: str, pages_dict: Dict[str, int] = None) -> None:
+def save_selected_pages(pdf_filename: str, pages_dict: Dict[str, int]) -> None:
     """
     Extract and save pages of interest.
     """
-    _p_dict = SELECTED_PAGES if pages_dict is None else pages_dict
-
     with pikepdf.open(pdf_filename) as pdf:
-        for name, num in _p_dict.items():
+        for name, num in pages_dict.items():
             logging.info(f"extracting page {num} as {name}")
             save_page(pdf, num, 'test/data', name)

@@ -8,6 +8,13 @@ CONTEXT = {
     'pdf_file': 'c:/z/spb-address-book.pdf'
 }
 
+SELECTED_PAGES = {
+    'crisp': 948,
+    'pale': 1382,
+    'new_letter': 1387,
+    'curvy': 897  # separation lines are not quite straight
+}
+
 
 @click.group()
 @click.option('--file', type=str)
@@ -21,7 +28,7 @@ def cli(ctx, file: str):
 @cli.command(help="for testing purposes")
 @click.pass_context
 def extract_test_pages(ctx):
-    save_selected_pages(ctx.obj['pdf_file'])
+    save_selected_pages(ctx.obj['pdf_file'], SELECTED_PAGES)
 
 
 if __name__ == '__main__':
