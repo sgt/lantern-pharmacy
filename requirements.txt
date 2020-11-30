@@ -1,6 +1,7 @@
-pikepdf
 numpy==1.19.3
-scikit-image
+# tesserocr
+pikepdf
 click
-tesserocr
 opencv-python
+matplotlib
+ipython
