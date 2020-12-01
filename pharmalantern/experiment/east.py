@@ -11,12 +11,12 @@ HEIGHT = 320
 MODEL = 'c:/z/frozen_east_text_detection.pb'
 MIN_CONFIDENCE = 0.5
 
+
 def east_detect():
     # load the input image and grab the image dimensions
     image = cv2.imread(IMAGE)
-    print(image.shape)
-    WIDTH=int(image.shape[1]-(image.shape[1] % 32))
-    HEIGHT=int(image.shape[0]-(image.shape[0]%32))
+    WIDTH = int(image.shape[1] - (image.shape[1] % 32))
+    HEIGHT = int(image.shape[0] - (image.shape[0] % 32))
 
     orig = image.copy()
     (H, W) = image.shape[:2]
@@ -125,6 +125,7 @@ def east_detect():
     # show the output image
     cv2.imshow("Text Detection", orig)
     cv2.waitKey(0)
+
 
 if __name__ == '__main__':
     east_detect()

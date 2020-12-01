@@ -7,8 +7,6 @@ import pikepdf
 from pikepdf import PdfImage
 
 
-
-
 def _get_pdf_image_page(pdf, page_num: int) -> PdfImage:
     page = pdf.pages[page_num]
     raw_image = list(page.images.values())[0]
@@ -27,7 +25,6 @@ def get_page(pdf, page_num: int) -> np.ndarray:
     pdf_image = _get_pdf_image_page(pdf, page_num)
     pil_image = pdf_image.as_pil_image()
     img_arr = np.asarray(pil_image)
-    print(img_arr.shape)
     return img_arr
 
 

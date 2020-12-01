@@ -5,3 +5,4 @@ click
 opencv-python
 matplotlib
 ipython
+Pillow
