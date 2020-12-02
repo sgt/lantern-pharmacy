@@ -4,6 +4,8 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
+Rectangle = Tuple[int, int, int, int]
+
 
 def load_grayscale_image(filename: str) -> np.ndarray:
     """
@@ -40,30 +42,11 @@ def crop_vertical(img: np.ndarray, top: int = 0, bottom: int = 0) -> np.ndarray:
     return img[top:h - bottom, :]
 
 
-def draw_contours(img: np.ndarray, contours: list) -> np.ndarray:
-    result = img.copy()
-    for c in contours:
-        x, y, w, h = cv2.boundingRect(c)
-        cv2.rectangle(result, (x, y), (x + w, y + h), (255, 0), 2)
+def draw_rectangles(img: np.ndarray, rectangles: List[Rectangle], color=(255, 0, 0)) -> np.ndarray:
+    result = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    for x, y, w, h in rectangles:
+        cv2.rectangle(result, (x, y), (x + w, y + h), color, 2)
     return result
-
-
-def visualise_decorative_elements_detection(gray: np.ndarray) -> None:
-    _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 2))
-    morph1 = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=3)
-
-    contours, _ = cv2.findContours(morph1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    result = draw_contours(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB), contours)
-
-    plot_multiple([
-        (gray, 'Source', 'gray'),
-        (thresh, 'Threshold', 'gray'),
-        (morph1, 'Morph 1', 'gray'),
-        (result, 'Result', 'gray'),
-    ], layout=(2, 2))
 
 
 def visualise_segmentation_process(gray: np.ndarray) -> None:
@@ -91,7 +74,12 @@ def visualise_segmentation_process(gray: np.ndarray) -> None:
 
     contours, _ = cv2.findContours(morph2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    result = draw_contours(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB), contours)
+    img = cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
+    result1 = img.copy()
+    for c in contours:
+        x, y, w, h = cv2.boundingRect(c)
+        cv2.rectangle(result1, (x, y), (x + w, y + h), (255, 0), 2)
+    result = result1
 
     plot_multiple([
         (gray, 'Source', 'gray'),

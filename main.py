@@ -10,6 +10,7 @@ CONTEXT = {
 }
 
 SELECTED_PAGES = {
+    'warped': 773,
     'crisp': 948,
     'pale': 1382,
     'new_letter': 1387,
