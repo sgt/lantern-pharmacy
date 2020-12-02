@@ -1,3 +1,11 @@
+# Lantern-pharmacy
+
+Segmenting 
+
+
+![meow](https://raw.githubusercontent.com/sgt/lantern-pharmacy/master/test/data/crisp-small.jpg)
+
+
 ## Important links (stuff to try out)
 
 * [OpenCV-Document-Scanner](https://github.com/andrewdcampbell/OpenCV-Document-Scanner) (cleaning up background & fluff, seems unsuitable for our purposes)
@@ -12,4 +20,3 @@
 * [How to detect paragraphs in a text document](https://stackoverflow.com/questions/57249273)
 * [How to detect the text above lines](https://stackoverflow.com/questions/61199573)
 * [Segmenting image files with text (and pictures) into blocks](https://stackoverflow.com/questions/61198983)
-
