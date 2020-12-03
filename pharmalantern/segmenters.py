@@ -1,3 +1,4 @@
+import logging
 from typing import Tuple, List
 
 import cv2
@@ -128,6 +129,7 @@ class TopBottomEraser:
         """
         top, bottom = self.detect_erasure_boundaries()
 
+        # todo make cropping work
         return undefined if self.crop \
             else self._clean_up_image(self.img, top, bottom)
 
@@ -195,6 +197,27 @@ class ColumnSegmenter:
         _, _, w, h = rect
         return (self.min_col_w <= w <= self.max_col_w) and self.min_col_h <= h
 
+    def adjust_column(self, column: Rectangle, horizontal_padding=15) -> Rectangle:
+        """
+        Some heuristics for column adjustments.
+
+        - apply horizontal padding
+        - if column is leftmost or rightmost, extend it to the page's edge
+        """
+        x, y, w, h = column
+
+        # horizontal padding
+        x = max(x - horizontal_padding, 0)
+        w = w + horizontal_padding * 2
+
+        # adjusting leftmost or rightmost columns
+        if x < self.min_col_w:
+            x = 0
+        elif x + w > self.img_w - self.min_col_w:
+            w = self.img_w - x
+
+        return x, y, w, h
+
     def detect_columns(self, visualise=False) -> List[Rectangle]:
         img_step1 = self._step_threshold(self.img)
         img_step2 = self._step_dilate(img_step1)
@@ -208,4 +231,4 @@ class ColumnSegmenter:
         if visualise:
             self._visualise_process(img_step2, img_step3, rectangles, columns)
 
-        return columns
+        return [self.adjust_column(column) for column in columns]

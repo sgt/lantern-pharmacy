@@ -1,3 +1,5 @@
+import logging
+import os
 from typing import Tuple, List
 
 import cv2
@@ -88,3 +90,14 @@ def visualise_segmentation_process(gray: np.ndarray) -> None:
         (morph2, 'Morph 2', 'gray'),
         (result, 'Result', None),
     ], layout=(2, 3))
+
+
+def save_segments(img: np.ndarray, segments: List[Rectangle], out_dir: str) -> None:
+    os.makedirs(out_dir, exist_ok=True)
+    for i, segment in enumerate(segments):
+        x, y, w, h = segment
+        segment_image = img[y:y + h,x:x + w]
+        filename = f"column-{i:02}.jpg"
+        full_path = os.path.join(out_dir, filename)
+        logging.debug(f"saving segment to {full_path}")
+        cv2.imwrite(full_path, segment_image, [cv2.IMWRITE_JPEG_QUALITY,75])

@@ -13,9 +13,9 @@ def _get_pdf_image_page(pdf, page_num: int) -> PdfImage:
     return PdfImage(raw_image)
 
 
-def _get_all_pdf_image_pages(pdf) -> Iterable[PdfImage]:
-    for page in pdf.pages:
-        yield PdfImage(list(page.images.values())[0])
+def _get_pdf_image_pages(pdf, start: int, end: int) -> Iterable[PdfImage]:
+    for num in range(start, end + 1):
+        yield _get_pdf_image_page(pdf, num)
 
 
 def get_page(pdf, page_num: int) -> np.ndarray:
@@ -26,6 +26,11 @@ def get_page(pdf, page_num: int) -> np.ndarray:
     pil_image = pdf_image.as_pil_image()
     img_arr = np.asarray(pil_image)
     return img_arr
+
+
+def get_pages(pdf, start: int, end: int) -> Iterable[np.ndarray]:
+    for num in range(start, end + 1):
+        yield get_page(pdf, num)
 
 
 def save_page(pdf, page_num: int, directory: str, filename: str) -> None:

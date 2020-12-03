@@ -16,8 +16,9 @@ PALE_SMALL_IMG = foo('pale-small')
 CRISP_SMALL_IMG = foo('crisp-small')
 NEW_LETTER_IMG = foo('new_letter')
 WARPED_IMG = foo('warped')
+CURVY_IMG = foo('curvy')
 
-source = load_grayscale_image(WARPED_IMG)
+source = load_grayscale_image(CURVY_IMG)
 
 # %%
 visualise_segmentation_process(source)
